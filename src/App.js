@@ -1,26 +1,82 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
 
-function App() {
+function App () {
+  const items = [
+    { completed: false, text: 'Pick up milk' },
+    { completed: true, text: 'Take out trash' },
+    { completed: false, text: 'Feed cat' }
+  ]
+
+  const otherItems = [
+    { completed: false, text: 'Make lunch' }
+  ]
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h1>Todo list</h1>
+      <TodoList items={items} />
+      <h1>Items for later</h1>
+      <TodoList items={otherItems} />
     </div>
-  );
+  )
 }
 
-export default App;
+class TodoList extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      hideCompleted: false
+    }
+  }
+
+  render () {
+  /*
+  items should be a array of objects like
+  [{completed: false, text: 'Pick up milk'}]
+  */
+
+    let items = this.props.items
+    if (this.state.hideCompleted) {
+      items = items.filter(item => !item.completed)
+    }
+
+    return (
+      <div>
+        <label>
+          <input
+            type='checkbox' checked={this.state.hideCompleted}
+            onClick={(e) => this.setState({ hideCompleted: e.target.checked })}
+          />
+          Hide completed items
+        </label>
+        <ul>
+          {items.map(
+            (item, idx) => (
+              <li className={item.completed ? 'completed' : undefined} key={idx}>
+                {item.text}
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+    )
+  }
+}
+
+export default App
+
+/*
+&&
+||
+?:
+
+if (a > 10) {
+  doThis()
+} else {
+  doThat()
+}
+
+(a > 10) ? doThis() : doThat()
+
+*/

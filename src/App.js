@@ -1,30 +1,32 @@
 import React from 'react'
 import './App.css'
 
-function App () {
-  const items = [
-    { completed: false, text: 'Pick up milk' },
-    { completed: true, text: 'Take out trash' },
-    { completed: false, text: 'Feed cat' }
-  ]
+class App extends React.Component {
+  render () {
+    const items = [
+      { completed: false, text: 'Pick up milk' },
+      { completed: true, text: 'Take out trash' },
+      { completed: false, text: 'Feed cat' }
+    ]
 
-  const otherItems = [
-    { completed: false, text: 'Make lunch' }
-  ]
+    const otherItems = [
+      { completed: false, text: 'Make lunch' }
+    ]
 
-  return (
-    <div className='App'>
-      <h1>Todo list</h1>
-      <TodoList items={items} />
-      <h1>Items for later</h1>
-      <TodoList items={otherItems} />
-    </div>
-  )
+    return (
+      <div className='App'>
+        <h1>Todo list</h1>
+        <TodoList items={items} />
+        <h1>Items for later</h1>
+        <TodoList items={otherItems} />
+      </div>
+    )
+  }
 }
 
 class TodoList extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       hideCompleted: false
     }
@@ -46,7 +48,7 @@ class TodoList extends React.Component {
         <label>
           <input
             type='checkbox' checked={this.state.hideCompleted}
-            onClick={(e) => this.setState({ hideCompleted: e.target.checked })}
+            onClick={(event) => this.setState({ hideCompleted: event.target.checked })}
           />
           Hide completed items
         </label>
